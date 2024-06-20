@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple and responsive temperature converter website that converts between Fahrenheit, Celsius, and Kelvin.">
+    <meta name="keywords" content="Temperature Converter, Fahrenheit to Celsius, Celsius to Fahrenheit, Kelvin, Online Converter">
+    <meta name="author" content="Sourav Mandal">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/ap.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 192, 203, 0.5);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            color:red;
+        }
+
+        .converter {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            font-size: 1.2em;
+        }
+
+        label {
+            text-align: left;
+        }
+
+        input, select, button {
+            padding: 10px;
+            border-radius: 15px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 0.8em;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            width:25%;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #convertButton{
+            font-size:1.0em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <div class="converter">
+            <label for="degrees">Enter Temperature</label>
+            <input type="number" id="degrees" placeholder="Enter a number" required>
+            <label for="inputType">From</label>
+            <select id="inputType">
+                <option value="Fahrenheit">Fahrenheit</option>
+                <option value="Celsius">Celsius</option>
+                <option value="Kelvin">Kelvin</option>
+            </select>
+            <label for="outputType">To</label>
+            <select id="outputType">
+                <option value="Fahrenheit">Fahrenheit</option>
+                <option value="Celsius">Celsius</option>
+                <option value="Kelvin">Kelvin</option>
+            </select>
+            <center><button id="convertButton">Convert</button></center>
+        </div>
+    </div>
+    <script>
+        document.getElementById('convertButton').addEventListener('click', () => {
+            const degrees = parseFloat(document.getElementById('degrees').value);
+            const inputType = document.getElementById('inputType').value;
+            const outputType = document.getElementById('outputType').value;
+            let result;
+
+            if (isNaN(degrees)) {
+                alert("Please enter a valid number.");
+                return;
+            } else {
+                switch (inputType) {
+                    case 'Fahrenheit':
+                        if (outputType === 'Celsius') {
+                            result = `${((degrees - 32) * 5 / 9).toFixed(4)} °C`;
+                        } else if (outputType === 'Kelvin') {
+                            result = `${((degrees - 32) * 5 / 9 + 273.15).toFixed(4)} K`;
+                        } else {
+                            result = `${degrees.toFixed(4)} °F`;
+                        }
+                        break;
+                    case 'Celsius':
+                        if (outputType === 'Fahrenheit') {
+                            result = `${((degrees * 9 / 5) + 32).toFixed(4)} °F`;
+                        } else if (outputType === 'Kelvin') {
+                            result = `${(degrees + 273.15).toFixed(4)} K`;
+                        } else {
+                            result = `${degrees.toFixed(4)} °C`;
+                        }
+                        break;
+                    case 'Kelvin':
+                        if (outputType === 'Fahrenheit') {
+                            result = `${((degrees - 273.15) * 9 / 5 + 32).toFixed(4)} °F`;
+                        } else if (outputType === 'Celsius') {
+                            result = `${(degrees - 273.15).toFixed(4)} °C`;
+                        } else {
+                            result = `${degrees.toFixed(4)} K`;
+                        }
+                        break;
+                }
+            }
+
+            window.location.href = `result.html?input=${degrees} ${inputType}&output=${result}`;
+        });
+    </script>
+</body>
+</html>

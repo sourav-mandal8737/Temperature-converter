@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple and responsive temperature converter website that converts between Fahrenheit, Celsius, and Kelvin.">
+    <meta name="keywords" content="Temperature Converter, Fahrenheit to Celsius, Celsius to Fahrenheit, Kelvin, Online Converter">
+    <meta name="author" content="Sourav Mandal">
+    <title>Conversion Result</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('Images/ap.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 192, 203, 0.5); 
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 500px;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .result-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            background-color: rgba(249, 249, 249, 0.9); 
+            padding: 20px;
+            border-radius: 8px;
+            border: 0px solid #007bff;
+        }
+
+        button {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            width: 20%;
+            box-sizing: border-box;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #inputTemp, #outputTemp {
+            font-size: 1.4em;
+            font-style: italic;
+            color: #333;
+        }
+        #goback{
+            font-size:1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Conversion Result</h1>
+        <div class="result-container">
+            <div id="inputTemp"></div>
+            <div id="outputTemp"></div>
+            <center><button onclick="goBack()"><div id="goback">Go Back</div></button></center>
+        </div>
+    </div>
+    <script>
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                input: params.get('input'),
+                output: params.get('output')
+            };
+        }
+
+        function displayResults() {
+            const { input, output } = getQueryParams();
+            document.getElementById('inputTemp').innerHTML = `Entered Temperature: ${formatTemperature(input)}`;
+            document.getElementById('outputTemp').innerHTML = `Result Temperature: ${formatTemperature(output)}`;
+        }
+
+        function formatTemperature(tempString) {
+            const [value, ...unitParts] = tempString.split(' ');
+            const unit = unitParts.join(' ');
+
+            let symbol;
+            switch (unit) {
+                case 'Fahrenheit':
+                case '°F':
+                    symbol = '°F';
+                    break;
+                case 'Celsius':
+                case '°C':
+                    symbol = '°C';
+                    break;
+                case 'Kelvin':
+                case 'K':
+                    symbol = 'K';
+                    break;
+                default:
+                    symbol = '';
+            }
+            return `${value} ${symbol}`;
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        displayResults();
+    </script>
+</body>
+</html>
